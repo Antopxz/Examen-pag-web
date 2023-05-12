@@ -74,6 +74,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Edit</th>
+                                        <th scope="col">Delete</th>
                                         <th scope="col">#</th>
                                         <th scope="col">Img</th>
                                         <th scope="col">Descripción</th>
@@ -81,36 +82,7 @@
                                         <th scope="col">Precio</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><button class="btn btn-editar" data-bs-toggle="modal"
-                                                data-bs-target="#modal-editar"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="16" height="16" fill="currentColor" class="bi bi-pencil-fill"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                                </svg></button>
-                                        </th>
-                                        <td>1</td>
-                                        <td><img src="img/cama felpa.jpg" class="img-fluid h-25 w-25" alt=""></td>
-                                        <td>Cama de felpa</td>
-                                        <td>10</td>
-                                        <td>5500CLP</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><button class="btn btn-editar" data-bs-toggle="modal"
-                                                data-bs-target="#modal-editar"><svg xmlns="http://www.w3.org/2000/svg"
-                                                    width="16" height="16" fill="currentColor" class="bi bi-pencil-fill"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                                </svg></button></th>
-                                        <td>2</td>
-                                        <td><img src="img/pelota juguete.jpg" class="img-fluid h-25 w-25" alt=""></td>
-                                        <td>Pelota de juguete</td>
-                                        <td>6</td>
-                                        <td>2500CLP</td>
-                                    </tr>
+                                <tbody id="lista-productos">
                                 </tbody>
                             </table>
                         </div>
@@ -129,10 +101,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="agregar-producto">
                         <div class="mb-3">
-                            <label for="file" class="col-form-label">Imagen:</label>
-                            <input type="file" class="form-control" id="inputFile1">
+                            <label for="URL-imagen" class="col-form-label">Url imagen:</label>
+                            <input type="text" class="form-control" id="inputURL">
                         </div>
                         <div class="mb-3">
                             <label for="Descripción" class="col-form-label">Descripción:</label>
@@ -148,12 +120,13 @@
                             <input type="text" class="form-control" aria-label="Amount" id="inputPrecio"
                                 placeholder="Ingrese precio CLP">
                         </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
+                            <input type="submit" value="AGREGAR" class="btn btn-agregar mx-3">
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
-                    <button type="button" class="btn btn-primary">AGREGAR</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -194,6 +167,13 @@
             </div>
         </div>
     </div>
+
+    <div class="container text-center mb-3">
+        <span id="clock"></span>
+        <span id="ampm"></span>
+        <br>
+        <span id="date"></span>
+    </div>
     <!-- Bootstrap script -->
 
     <!-- Boton TOP -->
@@ -206,10 +186,19 @@
     </button>
 
     <script src="index.js"></script>
+    <!-- bootstrap src -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
+    <!-- JQUERY SCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <!-- JQUERY VALIDATE -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <!-- JS FORM -->
+    <script src="formulario_Jquery.js"></script>
+    <!-- JS CRUD -->
+    <script src="CRUD.js"></script>
 </body>
-<!-- API, RLEOJ , VALIDACIONES JQUERY/JS  -->
 
 </html>
