@@ -1,3 +1,79 @@
+//CREACION ARRAY PRODUCTOS PARA CARRITO O ADMIN PRODUCTOS, AHI VEO QUE SALE
+const contenidoCarrito= document.getElementById("contenido-carrito");
+//SE HACE UN GET DEL BODY DE EL OFFCANVAS
+const carritoBody = document.getElementById("carrito-body");
+//BOTON VER CARRITO, GET ELEMENT (BOTON)
+const verCarrito = document.getElementById("carrito");
+//CERRAR CARRITO GET
+const cerrarCarrito= document.getElementById("cerrar-carrito");
+
+let carrito = [];
+
+productos.forEach((product)=>{
+    let content = document.createElement("div")
+    content.classList.add('col-lg-3', 'text-center')
+    content.innerHTML = `
+            <div class="card border-0 bg-light mb-2">
+                <div class="card-body">
+                <img src="${product.imgURL}" class="img-fluid product-img" alt="">
+                </div>
+                <h6>${product.descripcion}</h6>
+                <p>$ ${product.precio} - CLP</p>
+            </div>
+    `;
+    contenidoCarrito.append(content);
+
+    let comprar = document.createElement("button");
+    comprar.innerText = "Adquirir";
+    comprar.className = "btn comprar";
+
+    content.append(comprar);
+
+    comprar.addEventListener("click",()=> {
+        carrito.push({
+            id : product.id,
+            imgURL : product.imgURL,
+            descripcion : product.descripcion,
+            precio : product.precio
+        });
+    });
+    
+})
+
+//VER EL CARRITO CON LOS PRODUCTOS ELEGIDOS EN LA TIENDA
+verCarrito.addEventListener("click",()=>{
+    
+    carritoBody.innerHTML ="";
+
+    //SE HACE UN LOOP DE LOS PRODUCTOS QUE ESTAN EN EL ARRAY! Y asi se crean los div en el offcanva
+    carrito.forEach((product) =>{
+        let carritoContent = document.createElement("div")
+        carritoContent.className="col-9 d-flex"
+        carritoContent.innerHTML = `
+        <div class="card border-0 bg-light mb-2">
+            <div class="card-body">
+                <img src= "${product.imgURL}" class="img-fluid product-img" alt="">
+            </div>
+                <h6>${product.descripcion}</h6>
+                <p>$ ${product.precio} - CLP</p>
+        </div>
+        `;
+        carritoBody.append(carritoContent);
+    })
+
+    const total= carrito.reduce((acc, element) => acc+ element.precio,0);
+
+    const totalCompra= document.createElement("div")
+    totalCompra.className= "total-content fw-bold"
+    totalCompra.innerHTML= `Total a pagar: ${total} CLP`;
+    carritoBody.append(totalCompra);
+});
+
+//  CERRAR CARRITO Y BORRAR
+
+
+
+//CLASES PRODUCTO PARA ADMIN
 class Product {
     constructor(id,imgURL,descripcion,cantidad, precio) {
         this.id = 0;
