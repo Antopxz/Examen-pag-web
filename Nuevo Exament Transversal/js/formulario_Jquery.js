@@ -98,3 +98,5 @@ $("#register").click(function() {
 
     //Construir JSON enviar por $.post
 })
+
+

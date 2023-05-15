@@ -234,6 +234,10 @@ input.error, select, textarea{
 .btn-agregar{
     margin-left: -40px;
 }
+
+#Update{
+    display: none;
+}
  /*BUTTON SCROLL*/
  #btn-back-to-top {
     position: fixed;
@@ -242,21 +246,24 @@ input.error, select, textarea{
     display: none;
   }
 
-  /*RELOJ DIGITAL*/
-  /*#watch{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    height: 200px;
-    border: 2px solid black;
-    border-radius: 50%;
-    color: red;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.7rem;
-  }*/
   #clock {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+  }
+
+  /*MODO OSCURO*/
+
+  .darkmode{
+    background-color: #292929;
+    color: white;
+  } 
+  .darkmode .card{
+    background-color: #3d3d3d;
+  }
+   
+  #checkbox{
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
   }

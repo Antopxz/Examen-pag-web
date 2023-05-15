@@ -1,3 +1,30 @@
+//MODO OSCURO SCRIPT 
+
+if (localStorage.getItem('theme') == 'dark') {
+    setDarkMode();
+    if (document.getElementById('checkbox').checked) {
+        localStorage.setItem('checkbox', true)
+
+    }
+
+}
+function setDarkMode() {
+    let isDark = document.body.classList.toggle('darkmode');
+    if (isDark) {
+        setDarkMode.checked = true;
+        localStorage.setItem('theme', 'dark')
+        document.getElementById('checkbox').setAttribute('checked', 'checked');
+        
+    } else {
+        setDarkMode.checked = true;
+        localStorage.removeItem('theme', 'dark');
+    }
+
+}
+
+
+
+//boton to top 
 let mybutton = document.getElementById("btn-back-to-top");
 
 // Al bajar 20px la pag aparecera el boton.
