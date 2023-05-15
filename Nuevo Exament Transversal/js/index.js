@@ -1,3 +1,15 @@
+//mapa apiss
+function iniciarMap(){
+  var coord = {lat:-33.500076234144586,lng: -70.61586364889015}; 
+  var map = new google.maps.Map(document.getElementById('mapa'),{
+    zoom: 15,
+    center: coord
+  });
+  var marker = new google.maps.Marker({
+    position: coord,
+    map: map
+  });
+}
 //MODO OSCURO SCRIPT 
 
 if (localStorage.getItem('theme') == 'dark') {
