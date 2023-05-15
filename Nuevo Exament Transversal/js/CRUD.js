@@ -6,8 +6,12 @@ const carritoBody = document.getElementById("carrito-body");
 const verCarrito = document.getElementById("carrito");
 //CERRAR CARRITO GET
 const cerrarCarrito= document.getElementById("cerrar-carrito");
+//Cantidad carrito
+const cantidadCarrito= document.getElementById("cantidad-carrito");
 
-let carrito = [];
+
+//CREACION PRODUCTOS SEGUN ARRAY
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 productos.forEach((product)=>{
     let content = document.createElement("div")
@@ -30,48 +34,38 @@ productos.forEach((product)=>{
     content.append(comprar);
 
     comprar.addEventListener("click",()=> {
-        carrito.push({
-            id : product.id,
-            imgURL : product.imgURL,
-            descripcion : product.descripcion,
-            precio : product.precio
-        });
+
+        const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id);
+
+        if(repeat){
+            carrito.map((prod)=>{
+                if(prod.id === product.id){
+                    prod.cantidad++;
+                }
+            }); 
+        }else{
+            carrito.push({
+                id : product.id,
+                imgURL : product.imgURL,
+                descripcion : product.descripcion,
+                precio : product.precio,
+                cantidad : product.cantidad
+            });
+            carritoCounter();
+            saveLocal();
+        }
     });
     
 })
 
-//VER EL CARRITO CON LOS PRODUCTOS ELEGIDOS EN LA TIENDA
-verCarrito.addEventListener("click",()=>{
-    
-    carritoBody.innerHTML ="";
+//LOCAL STORAGE SET 
+const saveLocal = () =>{
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+};
+// LOCAL GET ITEM 
 
-    //SE HACE UN LOOP DE LOS PRODUCTOS QUE ESTAN EN EL ARRAY! Y asi se crean los div en el offcanva
-    carrito.forEach((product) =>{
-        let carritoContent = document.createElement("div")
-        carritoContent.className="col-9 d-flex"
-        carritoContent.innerHTML = `
-        <div class="card border-0 bg-light mb-2">
-            <div class="card-body">
-                <img src= "${product.imgURL}" class="img-fluid product-img" alt="">
-            </div>
-                <h6>${product.descripcion}</h6>
-                <p>$ ${product.precio} - CLP</p>
-        </div>
-        `;
-        carritoBody.append(carritoContent);
-    })
-
-    const total= carrito.reduce((acc, element) => acc+ element.precio,0);
-
-    const totalCompra= document.createElement("div")
-    totalCompra.className= "total-content fw-bold"
-    totalCompra.innerHTML= `Total a pagar: ${total} CLP`;
-    carritoBody.append(totalCompra);
-});
-
-//  CERRAR CARRITO Y BORRAR
-
-
+const getItem = () => {
+};
 
 //CLASES PRODUCTO PARA ADMIN
 class Product {
@@ -83,7 +77,6 @@ class Product {
         this.precio = precio;
     }
 }
-
 class UI {
     addProduct(product) {
         const listaProducto = document.getElementById('lista-productos');

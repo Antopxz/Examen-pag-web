@@ -39,7 +39,16 @@ input.error, select, textarea{
     border: 2px solid rgb(133,213,229);
     margin-right: -35px;
 }
+/* Cantidad carrito*/
 
+.cantidad-carrito{
+    background-color: rgb(133,213,229);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    padding: 4px;
+    display: none;
+}
 .btn0{
     height: 40px;
     width: 40%;
