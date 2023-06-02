@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
+{%load static%}
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,14 +10,19 @@
     integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  {% block head %}
 
+  {% endblock %}
 </head>
 
 <body>
+  {%block body%}
+
+  {%endblock%}
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="inicio.html">PetShopiety</a>
+      <a class="navbar-brand fw-bold" href="/">PetShopiety</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -24,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav m-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="inicio.html">Inicio</a>
+            <a class="nav-link active" href="/">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Tienda</a>
@@ -84,7 +90,7 @@
       <!-- Imagenes sacadas de pexels.com -->
       <div class="carousel-inner">
         <div class="carousel-item active c-item">
-          <img src="img/perrolentes.jpg" class="d-block w-100 c-img" alt="...">
+          <img src="{%static 'img/perrolentes.jpg'%}" class="d-block w-100 c-img" alt="...">
           <div class="carousel-caption top-0 mt-4">
             <p class="mt-5 fs-3 text-uppercase">¡Tu perro te agradecera el nivel de facha que le daras!</p>
             <h1 class="display-1 fw-bolder text-capitalize">Productos para perros</h1>
@@ -92,7 +98,7 @@
           </div>
         </div>
         <div class="carousel-item c-item">
-          <img src="img/cat.jpg" class="d-block w-100 c-img" alt="...">
+          <img src="{%static 'img/cat.jpg'%}" class="d-block w-100 c-img" alt="...">
           <div class="carousel-caption top-0 mt-4">
             <p class="mt-5 fs-3 text-uppercase">¡Haz a tu gatito feliz!</p>
             <h1 class="display-1 fw-bolder text-capitalize">Productos para gatos</h1>
@@ -100,7 +106,7 @@
           </div>
         </div>
         <div class="carousel-item c-item">
-          <img src="img/perrofacha.jpg" class="d-block w-100 c-img" alt="...">
+          <img src="{%static 'img/perrofacha.jpg'%}" class="d-block w-100 c-img" alt="...">
           <div class="carousel-caption top-0 mt-4">
             <p class="mt-5 fs-3 text-uppercase">¡Llevatelas ya!</p>
             <h1 class="display-1 fw-bolder text-capitalize">Aprovecha nuestras ofertas</h1>
@@ -125,15 +131,15 @@
         <div class="col-lg-7 m-auto">
           <div class="row text-center n-item">
             <div class="col">
-              <img src="img/bueno.webp" class="img-fluid n-img" alt="">
+              <img src="{%static 'img/bueno.webp'%}" class="img-fluid n-img" alt="">
               <h6>BUENO</h6>
             </div>
             <div class="col">
-              <img src="img/bonito.png" class="img-fluid n-img" alt="">
+              <img src="{%static 'img/bonito.png'%}" class="img-fluid n-img" alt="">
               <h6>BONITO</h6>
             </div>
             <div class="col">
-              <img src="img/barato.jpg" class="img-fluid n-img" alt="">
+              <img src="{%static 'img/barato.jpg'%}" class="img-fluid n-img" alt="">
               <h6>BARATO</h6>
             </div>
           </div>
@@ -174,20 +180,20 @@
       </div>
       <div class="row">
         <div class="col-lg-4">
-          <img src="img/perrito-blanco.jpg" alt="" class="img-fluid mb-3">
+          <img src="{%static 'img/perrito-blanco.jpg'%}" alt="" class="img-fluid mb-3">
           <h5>Nuestra Misión</h5>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, quis numquam nisi, nobis quidem omnis
             architecto ipsam ex magni placeat eius, eos minima fuga.</p>
 
         </div>
         <div class="col-lg-4">
-          <img src="img/mascotitas.jpg" alt="" class="img-fluid mb-3">
+          <img src="{%static 'img/mascotitas.jpg'%}" alt="" class="img-fluid mb-3">
           <h5>Clientes felices</h5>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate officia dignissimos ut numquam minima,
             impedit laborum accusamus qui cupiditate repellat, quo quia saepe officiis.</p>
         </div>
         <div class="col-lg-4">
-          <img src="img/perro-feliz-tren.jpg" alt="" class="img-fluid mb-3">
+          <img src="{%static 'img/perro-feliz-tren.jpg'%}" alt="" class="img-fluid mb-3">
           <h5>Mascotas felices</h5>
           <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum debitis necessitatibus aspernatur vero
             totam esse pariatur soluta, porro iure ducimus consequuntur odio quos sapiente.</p>
@@ -324,10 +330,10 @@
   alo
 
   <!-- JS SCRIPTS -->
-  <script src="./js/products.js"></script>
-  <script src="./js/CRUD.js"></script>
-  <script src="./js/Carrito.js"></script>
-  <script src="./js/index.js"></script>
+  <script src="{%static './js/products.js'%}"></script>
+  <script src="{%static './js/CRUD.js'%}"></script>
+  <script src="{%static './js/Carrito.js'%}"></script>
+  <script src="{%static './js/index.js'%}"></script>
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA61k1FSOEJugTd2u6kv1JuN0t12WvR07c&callback=iniciarMap"></script>
 
@@ -336,6 +342,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
     crossorigin="anonymous"></script>
+
+
+  {%block script%}
+
+  {%endblock%}
 </body>
 
 

@@ -1,0 +1,17 @@
+{% extends "./iniciarSesion.html" %} 
+{%load static %}
+
+{%block head%}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{%endblock%}
+
+
+{% block body %}
+<img src="{% static 'img/perrito.jpg'%}" class="img-fluid" alt="">
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'js/funciones.js' %}"></script>
+{% endblock %}
+
