@@ -1,7 +1,7 @@
 //FORMULARIO LOGIN
 
 $('#formulario-login').validate({
-    rules : {
+    rules: {
         email: {
             required: true,
             email: true
@@ -12,7 +12,7 @@ $('#formulario-login').validate({
         }
     },
     messages: {
-        email: { 
+        email: {
             required: "Este campo es obligatorio",
             email: "Ingrese un email valido"
         },
@@ -23,8 +23,8 @@ $('#formulario-login').validate({
     }
 })
 
-$("#login").click(function() {
-    if($('#formulario-login').valid() == false){
+$("#login").click(function () {
+    if ($('#formulario-login').valid() == false) {
         return;
     }
     let email = $('#email').val()
@@ -36,58 +36,58 @@ $("#login").click(function() {
 
 //Formulario REGISTER
 $('#formulario-register').validate({
-    rules : {
+    rules: {
         name: {
-            required : true,
-            maxlength : 50
+            required: true,
+            maxlength: 50
         },
         email: {
-            required : true,
-            email : true
+            required: true,
+            email: true
         },
         number: {
-            required :true,
-            number :true,
-            maxlength : 8,
-            minlength : 8
+            required: true,
+            number: true,
+            maxlength: 8,
+            minlength: 8
         },
-        password :{ 
-            required : true,
-            minlength : 3
+        password: {
+            required: true,
+            minlength: 3
         },
-        repassword :{
-            minlength :3,
+        repassword: {
+            minlength: 3,
             equalTo: password
         }
     },
     messages: {
-        name : {
-            required : "Este campo es obligatorio",
-            maxlength : "Nombre muy largo"
+        name: {
+            required: "Este campo es obligatorio",
+            maxlength: "Nombre muy largo"
         },
-        number:{
-            required : "Este campo es obligatorio",
-            number : "Ingrese un numero valido",
+        number: {
+            required: "Este campo es obligatorio",
+            number: "Ingrese un numero valido",
             maxlength: "Escriba un telefono de 8 numeros",
             minlength: "Escriba un telefono de 8 numeros"
         },
         email: {
-            required : "Este campo es obligatorio",
-            email: "Escriba un email valido",            
+            required: "Este campo es obligatorio",
+            email: "Escriba un email valido",
         },
-        password:{
+        password: {
             required: "Este campo es obligatorio",
             minlength: "Contraseña muy corta"
         },
-        repassword:{
+        repassword: {
             minlength: "Contraseña muy corta",
             equalTo: "Las contraseñas tienen que ser iguales"
         }
     }
 })
 
-$("#register").click(function() {
-    if($('#formulario-register').valid() == false){
+$("#register").click(function () {
+    if ($('#formulario-register').valid() == false) {
         return;
     }
     let name = $('#name').val()
