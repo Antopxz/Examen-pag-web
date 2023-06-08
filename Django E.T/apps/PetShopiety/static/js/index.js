@@ -1,7 +1,7 @@
 //mapa apiss
-function iniciarMap(){
-  var coord = {lat:-33.500076234144586,lng: -70.61586364889015}; 
-  var map = new google.maps.Map(document.getElementById('mapa'),{
+function iniciarMap() {
+  var coord = { lat: -33.500076234144586, lng: -70.61586364889015 };
+  var map = new google.maps.Map(document.getElementById('mapa'), {
     zoom: 15,
     center: coord
   });
@@ -13,24 +13,24 @@ function iniciarMap(){
 //MODO OSCURO SCRIPT 
 
 if (localStorage.getItem('theme') == 'dark') {
-    setDarkMode();
-    if (document.getElementById('checkbox').checked) {
-        localStorage.setItem('checkbox', true)
+  setDarkMode();
+  if (document.getElementById('checkbox').checked) {
+    localStorage.setItem('checkbox', true)
 
-    }
+  }
 
 }
 function setDarkMode() {
-    let isDark = document.body.classList.toggle('darkmode');
-    if (isDark) {
-        setDarkMode.checked = true;
-        localStorage.setItem('theme', 'dark')
-        document.getElementById('checkbox').setAttribute('checked', 'checked');
-        
-    } else {
-        setDarkMode.checked = true;
-        localStorage.removeItem('theme', 'dark');
-    }
+  let isDark = document.body.classList.toggle('darkmode');
+  if (isDark) {
+    setDarkMode.checked = true;
+    localStorage.setItem('theme', 'dark')
+    document.getElementById('checkbox').setAttribute('checked', 'checked');
+
+  } else {
+    setDarkMode.checked = true;
+    localStorage.removeItem('theme', 'dark');
+  }
 
 }
 
@@ -64,35 +64,34 @@ function backToTop() {
 
 //RELOJ DIGITAL TIME
 
-  function updateClock() {
-    let now = new Date();
-    let hour = now.getHours();
-    let minute = now.getMinutes();
-    let second = now.getSeconds();
-    let ampm = hour >= 12 ? 'PM' : 'AM';
-    
-    // Convertir a formato 12 horas
-    hour = hour % 12;
-    hour = hour ? hour : 12;
-    
-    // Agregar un cero inicial si el número es menor a 10
-    hour = hour < 10 ? '0' + hour : hour;
-    minute = minute < 10 ? '0' + minute : minute;
-    second = second < 10 ? '0' + second : second;
-    
-    // Actualizar la hora
-    document.getElementById('clock').innerHTML = hour + ':' + minute + ':' + second;
-    document.getElementById('ampm').innerHTML = ampm;
-    
-    // Actualizar la fecha
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let today = new Date();
-    let date = today.toLocaleDateString('es-ES', options);
-    document.getElementById('date').innerHTML = date;
-    
-    // Llamar a esta función cada segundo
-    setTimeout(updateClock, 1000);
-  }
+function updateClock() {
+  let now = new Date();
+  let hour = now.getHours();
+  let minute = now.getMinutes();
+  let second = now.getSeconds();
+  let ampm = hour >= 12 ? 'PM' : 'AM';
 
-  updateClock(); // Para iniciar la función
-  
+  // Convertir a formato 12 horas
+  hour = hour % 12;
+  hour = hour ? hour : 12;
+
+  // Agregar un cero inicial si el número es menor a 10
+  hour = hour < 10 ? '0' + hour : hour;
+  minute = minute < 10 ? '0' + minute : minute;
+  second = second < 10 ? '0' + second : second;
+
+  // Actualizar la hora
+  document.getElementById('clock').innerHTML = hour + ':' + minute + ':' + second;
+  document.getElementById('ampm').innerHTML = ampm;
+
+  // Actualizar la fecha
+  let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  let today = new Date();
+  let date = today.toLocaleDateString('es-ES', options);
+  document.getElementById('date').innerHTML = date;
+
+  // Llamar a esta función cada segundo
+  setTimeout(updateClock, 1000);
+}
+
+updateClock(); // Para iniciar la función
