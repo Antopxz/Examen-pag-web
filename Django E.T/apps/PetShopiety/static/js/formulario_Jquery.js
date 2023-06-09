@@ -1,9 +1,9 @@
 //FORMULARIO LOGIN
-
+console.log(jQuery);
 //Funcion cuando todo este ready se use los formularios
 $(document).ready(function () {
     // Tu código de validación aquí
-    $('#formulario-login').validate({
+    $("#formulario_login").validate({
         rules: {
             email: {
                 required: true,

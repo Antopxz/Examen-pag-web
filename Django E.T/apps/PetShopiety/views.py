@@ -13,3 +13,7 @@ def cargarIniciarSesion(request):
 
 def cargarAdminProductos(request):
     return render(request, "administrarProductos.html")
+
+
+def cargarRegistrarse(request):
+    return render(request, "registro.html")

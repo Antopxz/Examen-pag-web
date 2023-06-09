@@ -20,7 +20,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-black mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="inicio.html" style="color: white;">PetShopiety</a>
+            <a class="navbar-brand fw-bold" href"/" style="color: white;">PetShopiety</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -29,16 +29,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="inicio.html" style="color: white;">Inicio</a>
+                        <a class="nav-link active" href="/" style="color: white;">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="color: white;">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="inicio.html #about" style="color: white;">Sobre nosotros</a>
+                        <a class="nav-link" href="/ #about" style="color: white;">Sobre nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="inicio.html #contact" style="color: white;"> Contactenos</a>
+                        <a class="nav-link" href"/" style="color: white;"> Contactenos</a>
                     </li>
                     <li>
                         <div class="form-check form-switch">
@@ -67,7 +67,7 @@
                                 <img src="{%static 'img/logo.webp'%}" alt="logo" class="logo">
                             </div>
                             <p class="login-card-description"> PetShopiety</p>
-                            <form action="" id="formulario-login">
+                            <form action="" id="formulario_login">
                                 <div class="form-group">
                                     <label for="email" class="sr-only"></label>
                                     <input type="email" name="email" id="email" class="form-control"
@@ -84,7 +84,7 @@
 
                             <a href="#" class="forgot-password-link"> ¿Olvidaste tu contraseña?</a>
 
-                            <p class="login-card-footer-text">¿No tienes una cuenta? <a href="registro.html"
+                            <p class="login-card-footer-text">¿No tienes una cuenta? <a href="/registrarse"
                                     class="text-reset">Registrate aquí</a></p>
                             <nav class="login-card-footer-nav">
 
@@ -115,13 +115,15 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 
-    <!-- JQUERY SCRIPT JS-->
+    <!-- JQUERY SCRIPT JS-->  
+    <script src="{%static 'js/index.js'%}"></script>
     <script src="{%static 'js/jquery-3.7.0.min.js'%}"  crossorigin="anonymous"></script>    
+    <script src="{%static 'js/jquery.validate.min.js'%}"></script>
     <script src="{%static 'js/formulario_Jquery.js'%}"></script>
+
     <!-- <script src="./js/products.js"></script> -->
     <!-- <script src="./js/CRUD.js"></script> -->
     <!-- <script src="./js/Carrito.js"></script> -->
-    <script src="{%static 'js/index.js'%}"></script>
     {%block script%}
 
     {%endblock%}

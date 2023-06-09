@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+{%load static%}
 <head>
+    {%block head%}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {%endblock%}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sign Up</title>
@@ -12,6 +15,8 @@
 </head>
 
 <body class="">
+    {%block body%}
+    {%endblock%}
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg mb-4">
         <div class="container-fluid">
@@ -181,6 +186,8 @@
         <span id="date"></span>
     </div>
     <!-- Bootstrap script -->
+{%block script%}
+{%endblock%}
 
     <!-- Boton TOP -->
     <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
@@ -195,11 +202,11 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <!--SCRIPT JS-->
-    <script src="./js/AdminProducts.js"></script>
+    <script src="{%static 'js/AdminProducts.js'%}"></script>
     <!-- <script src="./js/Carrito.js"></script> -->
-    <script src="./js/CRUD.js"></script>
-    <script src="./js/index.js"></script>
-    <script src="./js/products.js"></script>
+    <script src="{%static 'js/CRUD.js'%}"></script>
+    <script src="{%static 'js/index.js'%}"></script>
+    <script src="{%static 'js/products.js'%}"></script>
 
 </body>
 
