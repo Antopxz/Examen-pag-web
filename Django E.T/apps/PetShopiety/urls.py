@@ -6,6 +6,6 @@ urlpatterns = [
     path('iniciar_sesion', views.cargarIniciarSesion,),
     path('admin_productos', views.cargarAdminProductos),
     path('registrarse', views.cargarRegistrarse),
-    path('tienda', views.cargarTienda)
-
+    path('tienda', views.cargarTienda),
+    path('agregarProductoForm', views.agregarProducto)
 ]
