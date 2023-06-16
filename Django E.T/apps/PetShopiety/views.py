@@ -18,7 +18,7 @@ def cargarAdminProductos(request):
 
 
 def agregarProducto(request):
-    print("PRODUCTO AGREGAR", request.POST)
+    # print("PRODUCTO AGREGAR", request.POST)
     v_img = request.FILES['img']
     v_sku = request.POST['txtSku']
     v_nombre = request.POST['producto']
@@ -30,7 +30,34 @@ def agregarProducto(request):
 
     Producto.objects.create(sku=v_sku, nombre=v_nombre, stock=v_stock, precio=v_precio,
                             descripcion=v_descripcion, id_cat=v_categoria, img_url=v_img)
+    return redirect('/admin_productos')
 
+
+def editarProducto(request, sku):
+    categorias = Categoria.objects.all()
+    productos = Producto.objects.get(sku=sku)
+    # print("PRODUCTO AGREGAR", request.POST)
+    return render(request, "editarProducto.html", {"prod": productos, "cate": categorias})
+
+
+def editarProductoForm(request, sku):
+    productos = Producto.objects.get(sku=sku)
+    productos.img_url = request.FILES['img']
+    productos.sku = request.POST['txtSku']
+    productos.nombre = request.POST['producto']
+    productos.stock = request.POST['cantidad']
+    productos.precio = request.POST['precio']
+    productos.descripcion = request.POST['descripcion']
+    productos.id_cat = Categoria.objects.get(
+        id_categoria=request.POST['cmbCategoria'])
+
+    productos.save()
+    return redirect('/admin_productos')
+
+
+def eliminarProducto(request, sku):
+    producto = Producto.objects.get(sku=sku)
+    producto.delete()
     return redirect('/admin_productos')
 
 
