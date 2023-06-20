@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 {%load static%}
@@ -112,21 +111,21 @@
                     <select name="cmbCategoria" class="form-select" aria-label="Default select example">
                         <option disabled selected>Seleccione</option>
                         {% for c in cate %}
-                        <option value="{{c.id_categoria}}">{{c.nombre_categoria}}</option>
+                        <option value="{{c.id_categoria}}" {% if c.id_categoria == prod.id_cat.id_categoria %}selected {% endif %} >{{c.nombre_categoria}}</option>
                         {% endfor %}
                     </select>
                 </div>
 
                 <div class="col-md-12">
                     <label for="txtDescripcion">Descripción:</label>
-                    <textarea name="descripcion" id="" class="form-control" placeholder="{{prod.descripcion}}" cols="30"
-                        rows="4"></textarea>
+                    <textarea name="descripcion" id="" class="form-control"
+                        placeholder="{{prod.descripcion}} - (Escriba una descripción)" cols="30" rows="4"></textarea>
                 </div>
 
                 <div class="">
                     <label for="txtImg">Imagen Url:</label>
                     <div class="container d-flex align-items-center">
-                        <h3 class="col-2">Imagen actual </h3>
+                        <h5 class="col-2">Imagen actual:</h5>
                         <img src="{{prod.img_url.url}}" class="col-1" alt="">
                     </div>
                     <input value="{{prod.img_url}}" name="img" id="txtImg" type="file" class="form-control m-3">
@@ -134,7 +133,8 @@
 
 
             </div>
-            <button class="btn btn-success mt-5 w-100">Agregar producto</button>
+            <button style="background-color: darkseagreen;" class="btn btn-success mt-5 w-100">Actualizar
+                producto</button>
         </form>
     </div>
     {% comment %} Termino de FOR DJANGO {% endcomment %}

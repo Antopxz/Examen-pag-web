@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
+import os
+from django.conf import settings
 # Create your views here.
 
 
@@ -41,9 +43,8 @@ def editarProducto(request, sku):
 
 
 def editarProductoForm(request, sku):
+
     productos = Producto.objects.get(sku=sku)
-    productos.img_url = request.FILES['img']
-    productos.sku = request.POST['txtSku']
     productos.nombre = request.POST['producto']
     productos.stock = request.POST['cantidad']
     productos.precio = request.POST['precio']
@@ -51,12 +52,24 @@ def editarProductoForm(request, sku):
     productos.id_cat = Categoria.objects.get(
         id_categoria=request.POST['cmbCategoria'])
 
+    try:
+        v_img = request.FILES['img']
+        ruta_imagen = os.path.join(settings.MEDIA_ROOT, str(productos.img_url))
+        os.remove(ruta_imagen)
+    except:
+        v_img = productos.img_url
+
+    productos.img_url = v_img
+
     productos.save()
+
     return redirect('/admin_productos')
 
 
 def eliminarProducto(request, sku):
     producto = Producto.objects.get(sku=sku)
+    ruta_imagen = os.path.join(settings.MEDIA_ROOT, str(producto.img_url))
+    os.remove(ruta_imagen)
     producto.delete()
     return redirect('/admin_productos')
 
