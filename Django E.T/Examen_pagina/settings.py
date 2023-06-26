@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.PetShopiety'
+    'apps.PetShopiety',
+    'apps.apiRest.apps'
 ]
 
 MIDDLEWARE = [

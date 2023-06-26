@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import *
 import os
 from django.conf import settings
+from django.http import HttpResponse
+import json
 # Create your views here.
 
 
@@ -83,3 +85,14 @@ def cargarTienda(request):
     categoria_perros = Producto.objects.filter(id_cat=1)
     categoria_gatos = Producto.objects.filter(id_cat=2)
     return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros})
+
+
+def carrito(request):
+    # PRINT("CARRITO",request.body)
+    productos = json.loads(request.body)
+
+    for p in productos:
+        print("SKU", p['sku'])
+        print("CANTIDAD", p['cantidad'])
+
+    return HttpResponse("Ok!")
