@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // Estructura de los productos en el carrito
+    // estructura 
     function construirProductoCarrito(producto) {
         var card = $('<div>').addClass('card');
         var img = $('<img>').addClass('card-img-top').attr('src', producto.img_url);
@@ -9,7 +9,7 @@ $(document).ready(function () {
         var cantidad = $('<p>').addClass('card-text').text('Cantidad: ' + producto.cantidad);
         var botonAumentar = $('<button>').addClass('btn btn-primary btn-sm aumentar').text('+');
         var botonDisminuir = $('<button>').addClass('btn btn-danger btn-sm disminuir').text('-');
-        var botonEliminar = $('<button>').addClass('btn btn-danger btn-sm eliminar').text('Eliminar');
+        var botonEliminar = $('<button>').addClass('btn btn-danger btn-sm eliminar position-absolute top-0 end-0').text('Eliminar');
 
         cardBody.append(titulo, precio, cantidad, botonAumentar, botonDisminuir, botonEliminar);
         card.append(img, cardBody);
@@ -17,7 +17,7 @@ $(document).ready(function () {
         return card;
     }
 
-    // Cargar productos del carrito desde el almacenamiento local
+    //cargar productos del carrito desde ls
     function cargarProductosCarrito() {
         var productosCarrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -30,16 +30,15 @@ $(document).ready(function () {
             $('#carrito-lista').append(columna);
         }
 
-        // Actualizar el precio total del carrito
         actualizarPrecioTotal();
     }
 
-    // Guardar productos del carrito en el almacenamiento local
+    // guardar productos del carrito en el ls
     function guardarProductosCarrito() {
         var productosCarrito = [];
 
         $('.producto-carrito').each(function () {
-            var sku = $(this).data('id');
+            var sku = parseInt($(this).data('id'));
             var nombre = $(this).find('.card-title').text();
             var img_url = $(this).find('.card-img-top').attr('src');
             var precio = parseFloat($(this).find('.card-text:nth-child(2)').text().split(' ')[0]);
@@ -59,25 +58,25 @@ $(document).ready(function () {
         localStorage.setItem('carrito', JSON.stringify(productosCarrito));
     }
 
-    // Captura el evento de clic en los botones "Adquirir"
+    // Captura "Adquirir"
     $(document).on('click', '.comprar', function () {
         var sku = $(this).data('id');
 
-        // Realiza la petición AJAX para obtener el producto
+        // AJAX para obtener producto
         $.ajax({
             url: '/tienda/' + sku,
             type: 'GET',
             success: function (data) {
-                // Verifica si el producto ya está en el carrito
+                // si el producto ya está en el carrito
                 var productoExistente = $('.producto-carrito[data-id="' + data.sku + '"]');
                 if (productoExistente.length > 0) {
-                    // Actualiza la cantidad del producto en el carrito
+                    // actualiza cantidad 
                     var cantidadExistente = parseInt(productoExistente.data('cantidad'));
                     var nuevaCantidad = cantidadExistente + 1;
                     productoExistente.find('.card-text:last').text('Cantidad: ' + nuevaCantidad);
                     productoExistente.data('cantidad', nuevaCantidad);
                 } else {
-                    // Agrega el producto al carrito
+                    // agregar producto 
                     var productoCarrito = {
                         sku: data.sku,
                         nombre: data.nombre,
@@ -91,10 +90,7 @@ $(document).ready(function () {
                     columna.append(productoCard);
                     $('#carrito-lista').append(columna);
                 }
-                // Actualiza el precio total del carrito
                 actualizarPrecioTotal();
-
-                // Guarda los productos del carrito en el almacenamiento local
                 guardarProductosCarrito();
             },
             error: function () {
@@ -103,21 +99,19 @@ $(document).ready(function () {
         });
     });
 
-    // Aumentar cantidad
+    // sumar
     $(document).on('click', '.aumentar', function () {
         var productoCard = $(this).closest('.producto-carrito');
         var cantidad = parseInt(productoCard.data('cantidad'));
         var nuevaCantidad = cantidad + 1;
         productoCard.find('.card-text:last').text('Cantidad: ' + nuevaCantidad);
         productoCard.data('cantidad', nuevaCantidad);
-        // Actualiza el precio total del carrito
-        actualizarPrecioTotal();
 
-        // Guarda los productos del carrito en el almacenamiento local
+        actualizarPrecioTotal();
         guardarProductosCarrito();
     });
 
-    // Disminuir cantidad
+    // restar
     $(document).on('click', '.disminuir', function () {
         var productoCard = $(this).closest('.producto-carrito');
         var cantidad = parseInt(productoCard.data('cantidad'));
@@ -127,29 +121,25 @@ $(document).ready(function () {
         }
         productoCard.find('.card-text:last').text('Cantidad: ' + nuevaCantidad);
         productoCard.data('cantidad', nuevaCantidad);
-        // Actualiza el precio total del carrito
-        actualizarPrecioTotal();
 
-        // Guarda los productos del carrito en el almacenamiento local
+
+        actualizarPrecioTotal();
         guardarProductosCarrito();
     });
 
-    // Eliminar producto
+    // funcion eliminar producto
     $(document).on('click', '.eliminar', function () {
         var cardProducto = $(this).closest('.producto-carrito');
         var sku = cardProducto.data('id');
 
-        // Elimina la card del producto del carrito
+        // eliminar
         cardProducto.remove();
 
-        // Actualiza el precio total del carrito
+        // actualiza y guarda 
         actualizarPrecioTotal();
-
-        // Guarda los productos del carrito en el almacenamiento local
         guardarProductosCarrito();
     });
 
-    // Actualizar precio total del carrito
     function actualizarPrecioTotal() {
         var precioTotal = 0;
 
@@ -162,6 +152,48 @@ $(document).ready(function () {
         $('#precio-total').text('Total: ' + precioTotal.toFixed(2) + ' - CLP');
     }
 
-    // Cargar productos del carrito al iniciar la página
     cargarProductosCarrito();
 });
+
+// COMPRA DE PRODUCTOS PORFAVOR HAZLOOO 
+
+// sacar los productos y asi modificarlos con la vista hecha de api
+var productosCarrito = [];
+
+let btnCarrito = document.getElementById("btn-comprar");
+
+btnCarrito.addEventListener('click', function () {
+    $('.producto-carrito').each(function () {
+        var sku = parseInt($(this).data('id'));
+        var cantidad = parseInt($(this).data('cantidad'));
+        productosCarrito.push({ sku: sku, cantidad: cantidad });
+    });
+
+    var data = { data: JSON.stringify(productosCarrito) };
+
+    let token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+    console.log("111111111111111", token);
+
+
+    fetch('/api/actualizar_stock', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': token
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Procesa la respuesta
+            if (data.compra_valida) {
+                //prueba que datos pasan
+                console.log(productosCarrito)
+            } else {
+            }
+        })
+        .catch(error => {
+            console.log('Error al actualizar el stock:', error);
+        });
+})

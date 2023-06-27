@@ -299,16 +299,20 @@
 
   <!-- CARRITO REAL -->
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrito de compras 🛒</h5>
-      <button id="cerrar-carrito" type="button" class="btn-close" data-bs-dismiss="offcanvas"
-        aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body" id="carrito-body">
-
-    </div>
+  id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrito de compras 🛒</h5>
+    <button id="cerrar-carrito" type="button" class="btn-close" data-bs-dismiss="offcanvas"
+      aria-label="Close"></button>
   </div>
+  <div class="offcanvas-body" id="carrito-body">
+    <div class="row row-cols-1 row g-4" id="carrito-lista"></div>
+  </div>
+  <div id="precio-total" class="fw-bolder py-2"></div>
+  <form action="">
+    <button id="btn-comprar" class="position-absolute bottom-0 end-0 btn btn-primary">Comprar Productos</button>
+  </form>
+</div>
   <!-- TOP BUTTON-->
   <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
@@ -322,7 +326,6 @@
   <!-- JS SCRIPTS -->
   <script src="{%static './js/products.js'%}"></script>
   <script src="{%static './js/CRUD.js'%}"></script>
-  <script src="{%static './js/Carrito.js'%}"></script>
   <script src="{%static './js/index.js'%}"></script>
 
   {% comment %} <script src="{%static './js/carroNuevo.js'%}"></script> {% endcomment %}

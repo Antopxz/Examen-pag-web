@@ -239,8 +239,10 @@
     <div class="offcanvas-body" id="carrito-body">
       <div class="row row-cols-1 row g-4" id="carrito-lista"></div>
     </div>
-    <div id="precio-total" class="fw-bolder"></div>
-
+    <div id="precio-total" class="fw-bolder py-2"></div>
+    <form action="">{% csrf_token %}
+      <button id="btn-comprar" class="position-absolute bottom-0 end-0 btn btn-primary">Comprar Productos</button>
+    </form>
   </div>
   <!-- TOP BUTTON-->
   <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
@@ -254,8 +256,9 @@
 
   <!-- JS SCRIPTS -->
   <script src="{%static 'js/jquery-3.7.0.min.js'%}" crossorigin="anonymous"></script>
-  <script src="{%static './js/index.js'%}"></script>
   <script src="{%static './js/CRUD.js'%}"></script>
+
+  <script src="{%static './js/index.js'%}"></script>
   {% comment %}
   <script src="{%static './js/Carrito.js'%}"></script> {% endcomment %}
 
