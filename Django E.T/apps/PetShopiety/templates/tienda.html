@@ -2,6 +2,7 @@
 <html lang="en">
 
 {%load static%}
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,7 +36,7 @@
             <a class="nav-link" href="#">Tienda</a>
           </li>
           <li>
-            <a class="nav-link" href="/iniciar_sesion">Iniciar Sesion</a> 
+            <a class="nav-link" href="/iniciar_sesion">Iniciar Sesion</a>
           </li>
           <li>
             <a class="nav-link" href="/admin_productos">ADMIN. PRODUCTOS</a>
@@ -75,50 +76,53 @@
 
   </nav>
 
-      <!-- PRODUCTOS DE LA TIENDA CON UN FOR EN DJANGO PARA CREAR HTML (CREANDO CARDS) -->
-    <div class="container">
-        <div class="row mt-5">
-            <h2>Perros</h2>
-            {% for p in cate_perros %}
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                  {%if p.img_url.url%}
-                    <img src="{{p.img_url.url}}" class="card-img-top" alt="...">
-                  {%else %}
-                  <img src="{{p.img_url}}" class="card-img-top" alt="...">
-                  {% endif %}
-                    <div class="card-body">
-                      <h5 class="card-title">{{p.nombre}}</h5>
-                      <p class="card-text">{{p.descripcion}}</p>
-                      <a href="#" class="btn btn-primary">{{p.precio}}</a>
-                    </div>
-                  </div>
-            </div>
-            {% endfor %}
+  <!-- PRODUCTOS DE LA TIENDA CON UN FOR EN DJANGO PARA CREAR HTML (CREANDO CARDS) -->
+  <div class="container">
+    <div class="row mt-5">
+      <h2>Perros</h2>
+      {% for p in cate_perros %}
+      <div class="col-lg-4 text-center my-3">
+        <div class="card" style="width: 18rem;">
+          {%if p.img_url.url%}
+          <img src="{{p.img_url.url}}" class="img-fluid product-img" alt="...">
+          {%else %}
+          <img src="{{p.img_url}}" class="img-fluid product-img" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{p.nombre}}</h5>
+            <p class="card-text">{{p.descripcion}}</p>
+            <p>{{p.precio}} - CLP</p>
+          </div>
+          <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
         </div>
-
-
-        <div class="row mt-5">
-            <h2>Gatos</h2>
-            {% for p in cate_gatos %}
-            <div class="col">
-                <div class="card" style="width: 18rem;">
-                  {%if p.img_url.url%}
-                    <img src="{{p.img_url.url}}" class="card-img-top img-fluid" alt="...">
-                  {%else %}
-                  <img src="{{p.img_url}}" class="card-img-top img-fluid" alt="...">
-                  {% endif %}                  
-                    <div class="card-body">
-                      <h5 class="card-title">{{p.nombre}}</h5>
-                      <p class="card-text">{{p.descripcion}}</p>
-                      <a href="#" class="btn btn-primary">{{p.precio}}</a>
-                    </div>
-                  </div>
-            </div>
-            {% endfor %}
-        </div>
+      </div>
+      {% endfor %}
     </div>
-    {% comment %} Termino de FOR DJANGO {% endcomment %}
+
+
+    <div class="row mt-5">
+      <h2>Gatos</h2>
+      {% for p in cate_gatos %}
+      <div class="col-lg-4 text-center my-3">
+        <div class="card border-0 bg-light mb-2" style="width: 18rem;">
+
+          {%if p.img_url.url%}
+          <img src="{{p.img_url.url}}" class="img-fluid product-img" alt="...">
+          {%else %}
+          <img src="{{p.img_url}}" class="img-fluid product-img" alt="...">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{p.nombre}}</h5>
+            <p class="card-text">{{p.descripcion}}</p>
+            <p>{{p.precio}} - CLP</p>
+          </div>
+          <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% comment %} Termino de FOR DJANGO {% endcomment %}
 
   <!-- Contact -->
 
@@ -233,8 +237,10 @@
         aria-label="Close"></button>
     </div>
     <div class="offcanvas-body" id="carrito-body">
-
+      <div class="row row-cols-1 row g-4" id="carrito-lista"></div>
     </div>
+    <div id="precio-total" class="fw-bolder"></div>
+
   </div>
   <!-- TOP BUTTON-->
   <button type="button" class="btn btn-floating btn-lg" id="btn-back-to-top">
@@ -247,10 +253,15 @@
 
 
   <!-- JS SCRIPTS -->
-  <script src="{%static './js/products.js'%}"></script>
-  <script src="{%static './js/CRUD.js'%}"></script>
-  <script src="{%static './js/Carrito.js'%}"></script>
+  <script src="{%static 'js/jquery-3.7.0.min.js'%}" crossorigin="anonymous"></script>
   <script src="{%static './js/index.js'%}"></script>
+  <script src="{%static './js/CRUD.js'%}"></script>
+  {% comment %}
+  <script src="{%static './js/Carrito.js'%}"></script> {% endcomment %}
+
+
+  {% comment %}
+  <script src="{%static './js/carroNuevo.js'%}"></script> {% endcomment %}
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA61k1FSOEJugTd2u6kv1JuN0t12WvR07c&callback=iniciarMap"></script>
 

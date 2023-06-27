@@ -4,6 +4,7 @@ import os
 from django.conf import settings
 from django.http import HttpResponse
 import json
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -87,12 +88,26 @@ def cargarTienda(request):
     return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros})
 
 
+def obtenerProductoId(request, sku):
+    producto = Producto.objects.get(sku=sku)
+    data = {
+        'sku': producto.sku,
+        'nombre': producto.nombre,
+        'stock': producto.stock,
+        'precio': producto.precio,
+        'descripcion': producto.descripcion,
+        'id_cat': producto.id_cat.id_categoria,
+        'img_url': producto.img_url.url,
+    }
+    return JsonResponse(data)
+
+
 def carrito(request):
-    # PRINT("CARRITO",request.body)
+    # print("CARRITO",request.body)
     productos = json.loads(request.body)
 
     for p in productos:
         print("SKU", p['sku'])
-        print("CANTIDAD", p['cantidad'])
+        print("CANTIDAD", p['stock'])
 
     return HttpResponse("Ok!")

@@ -11,5 +11,6 @@ urlpatterns = [
     path('editarProducto/<sku>', views.editarProducto),
     path('editarProductoForm/<sku>', views.editarProductoForm),
     path('eliminarProducto/<sku>', views.eliminarProducto),
-    path('carrito', views.carrito)
+    path('carrito', views.carrito),
+    path('tienda/<sku>', views.obtenerProductoId, name='obtener-producto')
 ]
