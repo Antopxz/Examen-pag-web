@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.utils.translation import gettext as _
 
 
 class Usuario(AbstractUser):
@@ -47,7 +48,6 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=200)
     id_cat = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     img_url = models.ImageField(upload_to='imagenesProducto')
-    administrador = models.ForeignKey(Usuario, on_delete=models.CASCADE)
 
     def __str__(self):
         txt = "SKU: {0} - Stock: {1} - Nombre: {2}"
