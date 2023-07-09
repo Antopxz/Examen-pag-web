@@ -58,11 +58,18 @@ class Orden(models.Model):
         txt = "Comprador: {0} - Fecha de orden: {1} - Completado: {2}"
         return txt.format(self.comprador, self.fecha_orden, self.completado)
 
+    @property
+    def shipping(self):
+        shipping = True
+        return shipping
+
+    @property
     def obtener_total_carrito(self):
         itemsorden = self.itemsorden_set.all()
         total = sum([item.obtener_total for item in itemsorden])
         return total
 
+    @property
     def obtener_total_items(self):
         itemsorden = self.itemsorden_set.all()
         total = sum([item.cantidad for item in itemsorden])

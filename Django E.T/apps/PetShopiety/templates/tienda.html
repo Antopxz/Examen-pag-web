@@ -1,8 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 
 {%load static%}
 {%load humanize %}
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -57,7 +57,7 @@
               class="navbar-brand bi bi-basket m-0" viewBox="0 0 16 16">
               <path
                 d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1v4.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 13.5V9a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1.217L5.07 1.243a.5.5 0 0 1 .686-.172zM2 9v4.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V9H2zM1 7v1h14V7H1zm3 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 4 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 6 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 10zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5zm2 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z" />
-            </svg><span id="cantidad-carrito" class="cantidad-carrito"></span>
+            </svg><span id="cantidad-carrito" class="cantidad-carrito">{{cartItems}}</span>
           </button>
 
 
@@ -93,7 +93,8 @@
             <p class="card-text">{{p.descripcion}}</p>
             <p>{{p.precio|intcomma}} - CLP</p>
           </div>
-          <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
+          <button data-product="{{p.sku}}" data-action="add" class="btn comprar" href="/({{p.sku}})">Agregar al
+            carrito</button>
         </div>
       </div>
       {% endfor %}
@@ -116,7 +117,8 @@
             <p class="card-text">{{p.descripcion}}</p>
             <p>{{p.precio | intcomma }} - CLP</p>
           </div>
-          <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
+          <button data-product="{{p.sku}}" data-action="add" class="btn comprar" href="/({{p.sku}})">Agregar al
+            carrito</button>
         </div>
       </div>
       {% endfor %}
@@ -255,8 +257,34 @@
 
 
   <!-- JS SCRIPTS -->
+  <script type="text/javascript">
+    var user = '{{request.user}}'
+
+{% comment %} 
+Esto que se usa ahora es para poder crear tokens al momento que el usuario estara con la sesion iniciada.
+{% endcomment %}
+    function getToken(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          const cookies = document.cookie.split(';');
+          for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+  const csrftoken = getToken('csrftoken');
+  </script>
+
   <script src="{%static 'js/jquery-3.7.0.min.js'%}" crossorigin="anonymous"></script>
-  <script src="{%static './js/CRUD.js'%}"></script>
+  {% comment %}
+  <script src="{%static './js/CRUD.js'%}"></script> {% endcomment %}
+  <script src="{%static './js/Carrito.js'%}"></script>
 
   <script src="{%static './js/index.js'%}"></script>
   {% comment %}

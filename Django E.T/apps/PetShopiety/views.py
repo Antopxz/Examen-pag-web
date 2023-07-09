@@ -13,10 +13,22 @@ def cargarInicio(request):
 
 
 def cargarTienda(request):
+    if request.user.is_authenticated:
+        comprador = request.user.comprador
+        orden, created = Orden.objects.get_or_create(
+            comprador=comprador, completado=False)
+        items = orden.itemsorden_set.all()
+        cartItems = orden.obtener_total_items
+    else:
+        items = []
+        orden = {"obtener_total_carrito": 0,
+                 "obtener_total_items": 0, 'shipping': False}
+        cartItems = orden['obtener_total_items']
+
     productos = Producto.objects.all()
     categoria_perros = Producto.objects.filter(id_cat=1)
     categoria_gatos = Producto.objects.filter(id_cat=2)
-    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros})
+    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros, 'cartItems': cartItems})
 
 
 def cargarCarrito(request):
@@ -25,10 +37,42 @@ def cargarCarrito(request):
         orden, created = Orden.objects.get_or_create(
             comprador=comprador, completado=False)
         items = orden.itemsorden_set.all()
+        cartItems = orden.obtener_total_items
     else:
         items = []
-        orden = {"obtener_total_carrito": 0, "obtener_total_items": 0}
-    return render(request, "carrito.html", {"items": items, "orden": orden})
+        orden = {"obtener_total_carrito": 0,
+                 "obtener_total_items": 0, 'shipping': False}
+        cartItems = orden['obtener_total_items']
+
+    return render(request, "carrito.html", {"items": items, "orden": orden, 'cartItems': cartItems})
+
+
+def agregarAlCarrito(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('Action:', action)
+    print('ProducID:', productId)
+    # Empezamos a crear la orden para que se guarde
+    comprador = request.user.comprador
+    producto = Producto.objects.get(sku=productId)
+    orden, created = Orden.objects.get_or_create(
+        comprador=comprador, completado=False)
+
+    itemsOrden, created = ItemsOrden.objects.get_or_create(
+        orden=orden, producto=producto)
+
+    if action == 'add':
+        itemsOrden.cantidad = (itemsOrden.cantidad + 1)
+    elif action == 'remove':
+        itemsOrden.cantidad = (itemsOrden.cantidad - 1)
+
+    itemsOrden.save()
+
+    if itemsOrden.cantidad <= 0:
+        itemsOrden.delete()
+    return JsonResponse('Producto agregado', safe=False)
 
 
 def cargarCheckOut(request):
@@ -37,10 +81,19 @@ def cargarCheckOut(request):
         orden, created = Orden.objects.get_or_create(
             comprador=comprador, completado=False)
         items = orden.itemsorden_set.all()
+        cartItems = orden.obtener_total_items
+
     else:
         items = []
-        orden = {"obtener_total_carrito": 0, "obtener_total_items": 0}
-    return render(request, "checkout.html", {"items": items, "orden": orden})
+        orden = {"obtener_total_carrito": 0,
+                 "obtener_total_items": 0, 'shipping': False}
+        cartItems = orden['obtener_total_items']
+
+    return render(request, "checkout.html", {"items": items, "orden": orden, 'cartItems:': cartItems})
+
+
+def procesarOrden(request):
+    return JsonResponse
 
 
 def cargarRegistrarse(request):

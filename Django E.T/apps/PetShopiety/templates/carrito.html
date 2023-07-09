@@ -99,9 +99,9 @@
                                     <td>{{item.producto.nombre}}</td>
                                     <td>{{item.producto.precio}}</td>
                                     <td>
-                                        <button class="btn">+</button>
+                                        <button data-product="{{item.producto.sku}}" data-action="add" class="btn comprar">+</button>
                                         <p class="cantidad">{{item.cantidad}}</p>
-                                        <button class="btn">-</button>
+                                        <button data-product="{{item.producto.sku}}" data-action="remove" class="btn comprar">-</button>
                                     </td>
                                     <td>${{item.obtener_total|intcomma}} CLP</td>
                                 </tr>
@@ -126,7 +126,31 @@
         crossorigin="anonymous"></script>
 
     <!-- JQUERY SCRIPT JS-->
-    <script src="{%static 'js/index.js'%}"></script>
+    <script type="text/javascript">
+        var user = '{{request.user}}'
+    
+    {% comment %} 
+    Esto que se usa ahora es para poder crear tokens al momento que el usuario estara con la sesion iniciada.
+    {% endcomment %}
+        function getToken(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const cookie = cookies[i].trim();
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+      const csrftoken = getToken('csrftoken');
+      </script>
+      <script src="{%static './js/Carrito.js'%}"></script>
+ 
     {%block script%}
 
     {%endblock%}
