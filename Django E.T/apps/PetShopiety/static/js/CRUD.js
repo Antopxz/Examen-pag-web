@@ -61,12 +61,15 @@ $(document).ready(function () {
     // Captura "Adquirir"
     $(document).on('click', '.comprar', function () {
         var sku = $(this).data('id');
+        //ver si hay stock disponible 
+
 
         // AJAX para obtener producto
         $.ajax({
             url: '/tienda/' + sku,
             type: 'GET',
             success: function (data) {
+
                 // si el producto ya está en el carrito
                 var productoExistente = $('.producto-carrito[data-id="' + data.sku + '"]');
                 if (productoExistente.length > 0) {
@@ -176,24 +179,27 @@ btnCarrito.addEventListener('click', function () {
     console.log("111111111111111", token);
 
 
-    fetch('/api/actualizar_stock', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': token
-        },
-        body: JSON.stringify(data),
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Procesa la respuesta
-            if (data.compra_valida) {
-                //prueba que datos pasan
-                console.log(productosCarrito)
-            } else {
-            }
-        })
-        .catch(error => {
-            console.log('Error al actualizar el stock:', error);
-        });
+    // fetch('/api/actualizar_stock', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'X-CSRFToken': token
+    //     },
+    //     body: JSON.stringify(data),
+    // })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         // Procesa la respuesta
+    //         if (data.compra_valida) {
+    //             //prueba que datos pasan
+    //             console.log(productosCarrito)
+    //         } else {
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.log('Error al actualizar el stock:', error);
+    //     });
 })
+
+
+// CRUUUD }

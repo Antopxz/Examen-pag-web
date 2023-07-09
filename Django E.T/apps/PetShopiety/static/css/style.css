@@ -1,10 +1,14 @@
-label.error{
+label.error {
     color: darkred;
 }
-input.error, select, textarea{
+
+input.error,
+select,
+textarea {
     border: 1px solid darkred;
 }
-*{
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -12,100 +16,107 @@ input.error, select, textarea{
     box-sizing: border-box;
 }
 
-.navbar-brand{
+.navbar-brand {
     font-size: 2rem;
     font-family: 'Source Code Pro', monospace;
     color: black;
 }
 
-.navbar-brand:hover{
+.navbar-brand:hover {
     color: black
 }
 
-.nav-link{
+.nav-link {
     margin: 0 10px 0 10px;
     color: black;
     text-transform: uppercase;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: black;
 }
 
-.search{
+.search {
     height: 40px;
     width: 80%;
     border-radius: 18px;
     outline: none;
-    border: 2px solid rgb(133,213,229);
+    border: 2px solid rgb(133, 213, 229);
     margin-right: -35px;
 }
+
 /* Cantidad carrito*/
 
-.cantidad-carrito{
-    background-color: rgb(133,213,229);
+.cantidad-carrito {
+    background-color: rgb(133, 213, 229);
     color: white;
     border-radius: 50%;
     font-size: 12px;
     padding: 4px;
     display: none;
 }
-.btn0{
+
+.btn0 {
     height: 40px;
     width: 40%;
     outline: none;
     border: none;
-    background-color: rgb(133,213,229);
+    background-color: rgb(133, 213, 229);
     color: white;
     border-radius: 20px;
     font-weight: 700;
 }
-.c-item{
+
+.c-item {
     height: 500px;
 }
 
-.c-img{
+.c-img {
     height: 100%;
     object-fit: cover;
     filter: brightness(0.6);
 }
-.btn{
-    background-color: rgb(133,213,229);
-}
-.btn:hover{
-    background-color: rgb(133,213,229);
+
+.btn {
+    background-color: rgb(133, 213, 229);
 }
 
-.n-item{
+.btn:hover {
+    background-color: rgb(133, 213, 229);
+}
+
+.n-item {
     height: 20px;
 }
-.n-img{
+
+.n-img {
     height: 40%;
 }
 
-.h1{
+.h1 {
     font-weight: 700;
 }
 
-.product-img{
+.product-img {
     width: 100%;
     height: 250px;
     object-fit: cover;
 }
 
-.card:hover{
-    -webkit-box-shadow: -2px -1px 25px -4px rgba(0,0,0,0.75);
-    -moz-box-shadow: -2px -1px 25px -4px rgba(0,0,0,0.75);
-    box-shadow: -2px -1px 25px -4px rgba(0,0,0,0.75);
+.card:hover {
+    -webkit-box-shadow: -2px -1px 25px -4px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -2px -1px 25px -4px rgba(0, 0, 0, 0.75);
+    box-shadow: -2px -1px 25px -4px rgba(0, 0, 0, 0.75);
     transition: 0.5s;
 }
 
 
-.news{
+.news {
     background-color: black;
     color: white;
 }
 
-.btn2{
+.btn2 {
     height: 45px;
     width: 100px;
     background: white;
@@ -114,7 +125,7 @@ input.error, select, textarea{
     font-weight: 600;
 }
 
-.news input{
+.news input {
     height: 45px;
     width: 55%;
     border: 2px solid white;
@@ -125,37 +136,37 @@ input.error, select, textarea{
     font-weight: 600;
 }
 
-.news::placeholder{
+.news::placeholder {
     color: white;
 }
 
-.news p{
+.news p {
     margin: 0;
 }
 
-.c-employee a{
- text-decoration: none;
- color: white;
+.c-employee a {
+    text-decoration: none;
+    color: white;
 }
 
 /* INICIAR SESION PAGE */
 
-.brand-wrapper{
+.brand-wrapper {
     margin-bottom: 19px;
 }
 
-.brand-wrapper .logo{
+.brand-wrapper .logo {
     height: 37px;
 }
 
-.login-card{
+.login-card {
     border: 0;
     border-radius: 10px;
-    box-shadow: 0 7px 21px 0 rgba(130,129,129,0.43);
+    box-shadow: 0 7px 21px 0 rgba(130, 129, 129, 0.43);
     overflow: hidden;
 }
 
-.login-card-img{
+.login-card-img {
     border-radius: 0;
     object-fit: cover;
     width: 100%;
@@ -163,114 +174,147 @@ input.error, select, textarea{
     -o-object-fit: cover;
 }
 
-.login-card .card-body{
+.login-card .card-body {
     padding: 85px 60px 60px;
 }
 
-@media(max-width: 422px){
-    .login-card .card-body{
+@media(max-width: 422px) {
+    .login-card .card-body {
         padding: 35px 24px;
     }
 }
-.login-card-description{
+
+.login-card-description {
     font-size: 25px;
     color: white;
     font-weight: normal;
     margin-bottom: 23px;
 }
 
-.login-card-d
-
-.login-card form{
+.login-card-d .login-card form {
     max-width: 326px;
 }
 
-.login-card .form-control{
-    border: 1px solid rgb(133,213,229);
+.login-card .form-control {
+    border: 1px solid rgb(133, 213, 229);
     padding: 15px 25px;
     margin-bottom: 20px;
     min-height: 45px;
     font-size: 17px;
     line-height: 15px;
     font-weight: normal;
-    color: rgb(133,213,229);
+    color: rgb(133, 213, 229);
 }
 
-.login-card{
+.login-card {
     padding: 13px 20px 12px;
 }
 
-.login-card .forgot-password-link{
+.login-card .forgot-password-link {
     font-size: 14px;
-    color: rgb(133,213,229);
+    color: rgb(133, 213, 229);
     margin-bottom: 12px;
 }
 
-.login-card-footer-text{
+.login-card-footer-text {
     font-size: 16px;
     margin-bottom: 40px;
-    color: rgb(133,213,229);
+    color: rgb(133, 213, 229);
 }
 
-.login-card-footer-nav a{
-    color: rgb(133,213,229);
+.login-card-footer-nav a {
+    color: rgb(133, 213, 229);
     font-size: 14px;
 }
 
-@media(max-width: 767px){
-.login-card-footer-text{
-    margin-bottom: 24px;
-}
+@media(max-width: 767px) {
+    .login-card-footer-text {
+        margin-bottom: 24px;
+    }
 }
 
 /*ADMINISTRAR PRODUCTOS*/
 
 
-.admin-card{
+.admin-card {
     border: 0;
     border-radius: 10px;
 }
 
-.btn-agregar{
+.btn-agregar {
     margin-left: -40px;
 }
 
-#Update{
+#Update {
     display: none;
 }
- /*BUTTON SCROLL*/
- #btn-back-to-top {
+
+/*BUTTON SCROLL*/
+#btn-back-to-top {
     position: fixed;
     bottom: 20px;
     right: 20px;
     display: none;
-  }
+}
 
-  #clock {
+#clock {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
-  }
+}
 
-  /*MODO OSCURO*/
+/*MODO OSCURO*/
 
-  .darkmode{
+.darkmode {
     background-color: #292929;
     color: white;
-  } 
-  .darkmode .card{
+}
+
+.darkmode .card {
     background-color: #3d3d3d;
-  }
-   
-  #checkbox{
+}
+
+#checkbox {
     width: 40px;
     height: 20px;
     cursor: pointer;
-  }
+}
 
-  /*MAPA */
+/*MAPA */
 
-  #mapa {
-	height: 500px;
-	width: 100%;
+#mapa {
+    height: 500px;
+    width: 100%;
+}
+
+/* CARRITO */
+
+.cart-row {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+
+}
+
+.cantidad {
+    font-weight: 700;
+    padding-right: 10px;
+}
+
+.chg-cantidad {
+    width: 12px;
+    background-color: #fff;
+    padding-right: 25px;
+    cursor: pointer;
+    display: block;
+}
+
+.chg-cantidad:hover {
+    background-color: #fff;
+}
+
+.hidden {
+    display: none !important;
 }

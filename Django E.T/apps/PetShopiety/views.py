@@ -12,6 +12,41 @@ def cargarInicio(request):
     return render(request, "base.html")
 
 
+def cargarTienda(request):
+    productos = Producto.objects.all()
+    categoria_perros = Producto.objects.filter(id_cat=1)
+    categoria_gatos = Producto.objects.filter(id_cat=2)
+    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros})
+
+
+def cargarCarrito(request):
+    if request.user.is_authenticated:
+        comprador = request.user.comprador
+        orden, created = Orden.objects.get_or_create(
+            comprador=comprador, completado=False)
+        items = orden.itemsorden_set.all()
+    else:
+        items = []
+        orden = {"obtener_total_carrito": 0, "obtener_total_items": 0}
+    return render(request, "carrito.html", {"items": items, "orden": orden})
+
+
+def cargarCheckOut(request):
+    if request.user.is_authenticated:
+        comprador = request.user.comprador
+        orden, created = Orden.objects.get_or_create(
+            comprador=comprador, completado=False)
+        items = orden.itemsorden_set.all()
+    else:
+        items = []
+        orden = {"obtener_total_carrito": 0, "obtener_total_items": 0}
+    return render(request, "checkout.html", {"items": items, "orden": orden})
+
+
+def cargarRegistrarse(request):
+    return render(request, "registro.html")
+
+
 def cargarIniciarSesion(request):
     return render(request, "iniciarSesion.html")
 
@@ -75,17 +110,6 @@ def eliminarProducto(request, sku):
     os.remove(ruta_imagen)
     producto.delete()
     return redirect('/admin_productos')
-
-
-def cargarRegistrarse(request):
-    return render(request, "registro.html")
-
-
-def cargarTienda(request):
-    productos = Producto.objects.all()
-    categoria_perros = Producto.objects.filter(id_cat=1)
-    categoria_gatos = Producto.objects.filter(id_cat=2)
-    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros})
 
 
 def obtenerProductoId(request, sku):

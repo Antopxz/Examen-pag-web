@@ -2,7 +2,7 @@
 <html lang="en">
 
 {%load static%}
-
+{%load humanize %}
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -86,12 +86,12 @@
           {%if p.img_url.url%}
           <img src="{{p.img_url.url}}" class="img-fluid product-img" alt="...">
           {%else %}
-          <img src="{{p.img_url}}" class="img-fluid product-img" alt="...">
+          <img src="{{p.imgURL}}" class="img-fluid product-img" alt="...">
           {% endif %}
           <div class="card-body">
             <h5 class="card-title">{{p.nombre}}</h5>
             <p class="card-text">{{p.descripcion}}</p>
-            <p>{{p.precio}} - CLP</p>
+            <p>{{p.precio|intcomma}} - CLP</p>
           </div>
           <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
         </div>
@@ -114,7 +114,7 @@
           <div class="card-body">
             <h5 class="card-title">{{p.nombre}}</h5>
             <p class="card-text">{{p.descripcion}}</p>
-            <p>{{p.precio}} - CLP</p>
+            <p>{{p.precio | intcomma }} - CLP</p>
           </div>
           <button data-id="{{p.sku}}" class="btn comprar" href="/({{p.sku}})">Adquirir!</button>
         </div>
@@ -260,7 +260,6 @@
 
   <script src="{%static './js/index.js'%}"></script>
   {% comment %}
-  <script src="{%static './js/Carrito.js'%}"></script> {% endcomment %}
 
 
   {% comment %}

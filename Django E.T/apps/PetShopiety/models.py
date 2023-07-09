@@ -1,34 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.utils.translation import gettext as _
-
-
-class Usuario(AbstractUser):
-    es_administrador = models.BooleanField(default=False)
-    es_cliente = models.BooleanField(default=False)
-    email = models.EmailField(unique=True)
-    contraseña = models.CharField(max_length=128)
-    # Añade related_name en los campos groups y user_permissions
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name=_('groups'),
-        blank=True,
-        help_text=_(
-            'The groups this user belongs to. A user will get all permissions '
-            'granted to each of their groups.'
-        ),
-        related_name='usuarios'  # Cambia 'usuarios' por el nombre que prefieras
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        verbose_name=_('user permissions'),
-        blank=True,
-        help_text=_('Specific permissions for this user.'),
-        related_name='usuarios'  # Cambia 'usuarios' por el nombre que prefieras
-    )
-
-    def __str__(self):
-        return self.username
 
 
 class Categoria(models.Model):
@@ -52,3 +24,80 @@ class Producto(models.Model):
     def __str__(self):
         txt = "SKU: {0} - Stock: {1} - Nombre: {2}"
         return txt.format(self.sku, self.stock, self.nombre)
+
+    @property  # ESTO ES PARA HACER EN CASO DE QUE NO HAYA IMAGEN DE PRODUCTO
+    def imageURL(self):
+        try:
+            url = self.img_url.url
+        except:
+            url = ''
+        return url
+
+
+class Comprador(models.Model):
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    nombre = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    contacto = models.IntegerField()
+
+    def __str__(self):
+        txt = "Usuario: {0} - Nombre : {1} Email: {2}"
+        return txt.format(self.usuario, self.nombre, self.email)
+
+
+class Orden(models.Model):
+    comprador = models.ForeignKey(
+        Comprador, on_delete=models.SET_NULL, blank=True, null=True)
+    # Se hace la orden al moemnto de crearse
+    fecha_orden = models.DateTimeField(auto_now_add=True)
+    completado = models.BooleanField(max_length=200, null=True)
+    id_transaccion = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        txt = "Comprador: {0} - Fecha de orden: {1} - Completado: {2}"
+        return txt.format(self.comprador, self.fecha_orden, self.completado)
+
+    def obtener_total_carrito(self):
+        itemsorden = self.itemsorden_set.all()
+        total = sum([item.obtener_total for item in itemsorden])
+        return total
+
+    def obtener_total_items(self):
+        itemsorden = self.itemsorden_set.all()
+        total = sum([item.cantidad for item in itemsorden])
+        return total
+
+
+class ItemsOrden(models.Model):
+    producto = models.ForeignKey(
+        Producto, on_delete=models.SET_NULL, blank=True, null=True)
+    orden = models.ForeignKey(
+        Orden, on_delete=models.SET_NULL, blank=True, null=True)
+    cantidad = models.IntegerField(default=0, null=True, blank=True)
+    fecha_agregada = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        txt = "productos: {0} -  Orden: {1} - Cantidad: {2}"
+        return txt.format(self.producto, self.orden, self.cantidad)
+
+    @property
+    def obtener_total(self):
+        total = self.producto.precio * self.cantidad
+        return total
+
+
+class DireccionEnvio(models.Model):
+    comprador = models.ForeignKey(
+        Comprador, on_delete=models.SET_NULL, blank=True, null=True)
+    orden = models.ForeignKey(
+        Orden, on_delete=models.SET_NULL, blank=True, null=True)
+    direccion = models.CharField(max_length=200, null=True)
+    ciudad = models.CharField(max_length=200, null=True)
+    region = models.CharField(max_length=200, null=True)
+    codigoPostal = models.CharField(max_length=200, null=True)
+    fecha_agregada = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        txt = "Comprador: {0} -  Orden: {1} - Direccion: {2}"
+        return txt.format(self.comprador, self.orden, self.direccion)
