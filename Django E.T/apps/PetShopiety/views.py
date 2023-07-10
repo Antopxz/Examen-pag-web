@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from .models import *
 import os
@@ -5,11 +6,25 @@ from django.conf import settings
 from django.http import HttpResponse
 import json
 from django.http import JsonResponse
+import datetime
+from django.contrib.auth import authenticate, login
+
 # Create your views here.
 
 
 def cargarInicio(request):
-    return render(request, "base.html")
+    if request.user.is_authenticated:
+        comprador = request.user.comprador
+        orden, created = Orden.objects.get_or_create(
+            comprador=comprador, completado=False)
+        items = orden.itemsorden_set.all()
+        cartItems = orden.obtener_total_items
+    else:
+        items = []
+        orden = {"obtener_total_carrito": 0,
+                 "obtener_total_items": 0, 'shipping': False}
+        cartItems = orden['obtener_total_items']
+    return render(request, "inicio.html", {"items": items, "orden": orden, 'cartItems': cartItems})
 
 
 def cargarTienda(request):
@@ -28,7 +43,7 @@ def cargarTienda(request):
     productos = Producto.objects.all()
     categoria_perros = Producto.objects.filter(id_cat=1)
     categoria_gatos = Producto.objects.filter(id_cat=2)
-    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros, 'cartItems': cartItems})
+    return render(request, "tienda.html", {"prod": productos, "cate_gatos": categoria_gatos, "cate_perros": categoria_perros, 'cartItems': cartItems, 'items': items})
 
 
 def cargarCarrito(request):
@@ -75,6 +90,7 @@ def agregarAlCarrito(request):
     return JsonResponse('Producto agregado', safe=False)
 
 
+@csrf_exempt
 def cargarCheckOut(request):
     if request.user.is_authenticated:
         comprador = request.user.comprador
@@ -92,8 +108,34 @@ def cargarCheckOut(request):
     return render(request, "checkout.html", {"items": items, "orden": orden, 'cartItems:': cartItems})
 
 
+@csrf_exempt
 def procesarOrden(request):
-    return JsonResponse
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        comprador = request.user.comprador
+        orden, created = Orden.objects.get_or_create(
+            comprador=comprador, completado=False)
+        total = float(data['form']['total'])
+        orden.id_transaccion = transaction_id
+
+        if total == float(orden.obtener_total_carrito):
+            orden.completado = True
+            orden.save()
+
+        if orden.shipping == True:
+            DireccionEnvio.objects.create(
+                comprador=comprador,
+                orden=orden,
+                direccion=data['shipping']['direccion'],
+                ciudad=data['shipping']['ciudad'],
+                region=data['shipping']['region'],
+                codigoPostal=data['shipping']['codigoPostal']
+            )
+    else:
+        print('Usuario no logeado :s')
+    return JsonResponse('Pago completado', safe=False)
 
 
 def cargarRegistrarse(request):
@@ -102,6 +144,20 @@ def cargarRegistrarse(request):
 
 def cargarIniciarSesion(request):
     return render(request, "iniciarSesion.html")
+
+
+@csrf_exempt
+def logearse(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+    return JsonResponse('Sesion iniciadaaaa')
 
 
 def cargarAdminProductos(request):

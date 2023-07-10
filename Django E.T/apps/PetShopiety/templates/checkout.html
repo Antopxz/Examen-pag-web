@@ -60,6 +60,7 @@
                 <div class="col-lg-6 ">
                     <div class="container p-4 bg-dark-subtle border-2" id="form-wrapper">
                         <form id="form">
+                            {%csrf_token%}
                             <div id="user-info">
                                 <h5>Usuario:</h5>
                                 <div class="form-field">
@@ -181,7 +182,7 @@
     <script src="{%static './js/Carrito.js'%}"></script>
     <script type="text/javascript">
         var shipping = '{{orden.shipping}}'
-        var total = '{{orden.obtener_total_carrito|intcomma}}'
+        var total = '{{orden.obtener_total_carrito}}'
 
         if (shipping == 'False') {
             document.getElementById('shipping-info').innerHTML = ''
@@ -234,10 +235,28 @@
                 direccionInfo.codigoPostal = form.codigoPostal.value
             }
 
-            if (user != 'False') {
+            if (user == 'AnonymousUser') {
                 userFormData.nombre = form.nombre.value
                 userFormData.email = form.email.value
             }
+
+            var url = '/procesarOrden/'
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({ 'form': userFormData, 'shipping': direccionInfo })
+            })
+
+                .then((response) => response.json)
+                .then((data) => {
+                    console.log('Logrado:', data)
+                    alert('Transaccion completada')
+                    window.location.href = "/tienda"
+                })
         }
 
     </script>

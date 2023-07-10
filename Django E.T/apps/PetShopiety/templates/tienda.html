@@ -233,17 +233,28 @@
   <!-- CARRITO REAL -->
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <div class="offcanvas-header">
+    <div class="offcanvas-header bg-dark-subtle">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrito de compras 🛒</h5>
       <button id="cerrar-carrito" type="button" class="btn-close" data-bs-dismiss="offcanvas"
         aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body" id="carrito-body">
-      <div class="row row-cols-1 row g-4" id="carrito-lista"></div>
+    <div class="offcanvas-body bg-dark-subtle" id="carrito-body">
+      <div class="row row-cols-1 row g-4" id="carrito-lista">
+        {% for item in items %}
+        <div class="m-3 card container-fluid w-75">
+          <img class="w-75" src="{{item.producto.img_url.url}}" alt=""></>
+          <h5>{{item.producto.nombre}}</h5>
+          <h6>Precio producto: <span>{{item.producto.precio}}</span></h6>
+          <div>
+            <h6>Cantidad: <span class="cantidad">{{item.cantidad}}</span></h6>
+          </div>
+          <h6>Total cantidad: <span>${{item.obtener_total|intcomma}} CLP</span></h6>
+        </div>
+        {% endfor %}
+      </div>
     </div>
-    <div id="precio-total" class="fw-bolder py-2"></div>
-    <form action="">{% csrf_token %}
-      <button id="btn-comprar" class="position-absolute bottom-0 end-0 btn btn-primary">Comprar Productos</button>
+    <form action="">
+      <a href="/carrito" class="position-absolute bottom-0 end-0 btn btn-outline-dark">Ver carrito</a>
     </form>
   </div>
   <!-- TOP BUTTON-->
