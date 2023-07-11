@@ -7,7 +7,7 @@ from django.http import HttpResponse
 import json
 from django.http import JsonResponse
 import datetime
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -24,7 +24,7 @@ def cargarInicio(request):
         orden = {"obtener_total_carrito": 0,
                  "obtener_total_items": 0, 'shipping': False}
         cartItems = orden['obtener_total_items']
-    return render(request, "inicio.html", {"items": items, "orden": orden, 'cartItems': cartItems})
+    return render(request, "index.html", {"items": items, "orden": orden, 'cartItems': cartItems})
 
 
 def cargarTienda(request):
@@ -124,6 +124,15 @@ def procesarOrden(request):
             orden.completado = True
             orden.save()
 
+            # Actualizar stock
+            items_orden = orden.itemsorden_set.all()
+            for item in items_orden:
+                producto = item.producto
+                cantidad_comprada = item.cantidad
+                producto.stock -= cantidad_comprada
+                print(producto, cantidad_comprada, producto.stock)
+                producto.save()
+
         if orden.shipping == True:
             DireccionEnvio.objects.create(
                 comprador=comprador,
@@ -194,6 +203,11 @@ def crear_usuario(request):
 
     else:
         return JsonResponse({'message': 'Método no permitido'}, status=405)
+
+
+def cerrar_sesion(request):
+    logout(request)
+    return (redirect('/index'))
 
 
 def cargarAdminProductos(request):
