@@ -1,64 +1,23 @@
-//FORMULARIO LOGIN
+//Formulario REGISTER
+var formularioCrearUsuario = document.getElementById("formulario-register");
 
-//Funcion cuando todo este ready se use los formularios
-var formulario = document.getElementById("login")
-var emailInput = document.getElementById("email");
-var passwordInput = document.getElementById("password");
-
-formulario.addEventListener("click", function (event) {
+formularioCrearUsuario.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    if (!formulario.checkValidity()) {
-        return;
-    }
-    var email = emailInput.value;
-    var password = passwordInput.value;
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var nombre = document.getElementById("nombre").value;
+    var email = document.getElementById("email").value;
+    var contacto = document.getElementById("contacto").value;
 
-    if (!validarEmail(email)) {
-        alert("Ingrese un email válido");
-        return;
-    }
-
-    if (!validarLongitudContraseña(password, 3)) {
-        alert("La contraseña debe tener al menos 3 caracteres");
-        return;
-    }
-
-    iniciarSesion(email, password);
+    crearUsuario(username, password, nombre, email, contacto);
 });
 
-function validarEmail(email) {
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-function validarLongitudContraseña(contraseña, longitudMinima) {
-    return contraseña.length >= longitudMinima;
-}
-
-function iniciarSesion(email, password) {
-    // Lógica de inicio de sesión utilizando fetch o cualquier otra técnica
-    console.log("Email: " + email);
-    console.log("Contraseña: " + password);
-}
-// INICIAR SESION 
 
 
-
-
-// $("#login").click(function () {
-//     if ($('#formulario-login').valid() == false) {
-//         return;
-//     } else {
-//         let email = $('#email').val()
-//         let password = $('#password').val()
-//         iniciarSesion(email, password)
-//     }
-// })
-//Formulario REGISTER
 $('#formulario-register').validate({
     rules: {
-        name: {
+        nombre: {
             required: true,
             maxlength: 50
         },
@@ -119,9 +78,3 @@ $("#register").click(function () {
 
     //Construir JSON enviar por $.post
 })
-
-
-
-
-
-

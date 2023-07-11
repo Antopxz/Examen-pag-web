@@ -149,15 +149,51 @@ def cargarIniciarSesion(request):
 @csrf_exempt
 def logearse(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
 
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('/')
-    return JsonResponse('Sesion iniciadaaaa')
+            # Obtén el comprador asociado al usuario
+            comprador = Comprador.objects.get(usuario=user)
+            # Realiza acciones adicionales después del inicio de sesión exitoso
+
+            return JsonResponse({'message': 'Inicio de sesión exitoso', 'comprador_id': comprador.id})
+        else:
+            return JsonResponse({'message': 'Credenciales inválidas'}, status=400)
+    else:
+        return JsonResponse({'message': 'Método no permitido'}, status=405)
+
+
+@csrf_exempt
+def crear_usuario(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
+        nombre = data['nombre']
+        email = data['email']
+        contacto = data['contacto']
+
+        # Verificar si el usuario ya existe
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'error': 'El usuario ya existe'}, status=400)
+
+        # Crear el usuario
+        user = User.objects.create_user(username=username, password=password)
+
+        # Crear el comprador asociado al usuario
+        comprador = Comprador.objects.create(
+            usuario=user, nombre=nombre, email=email, contacto=contacto)
+
+        # Realiza acciones adicionales después de la creación exitosa del usuario
+        return JsonResponse({'message': 'Usuario creado exitosamente'})
+
+    else:
+        return JsonResponse({'message': 'Método no permitido'}, status=405)
 
 
 def cargarAdminProductos(request):

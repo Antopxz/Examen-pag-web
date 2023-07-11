@@ -29,16 +29,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/" style="color: white;">Inicio</a>
+                        <a class="nav-link active" href="/index" style="color: white;">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: white;">Tienda</a>
+                        <a class="nav-link" href="/tienda" style="color: white;">Tienda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/#about" style="color: white;">Sobre nosotros</a>
+                        <a class="nav-link" href="/index#about" style="color: white;">Sobre nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/#contact" style="color: white;">Contactenos</a>
+                        <a class="nav-link" href="/index#contact" style="color: white;">Contactenos</a>
                     </li>
                     <li>
                         <div class="form-check form-switch">
@@ -68,10 +68,10 @@
                             </div>
                             <p class="login-card-description"> PetShopiety</p>
                             <form action="" id="formulario_login">
+                                {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="email" class="sr-only"></label>
-                                    <input type="email" name="email" id="email" class="form-control"
-                                        placeholder="Email">
+                                    <input type="text" name="username" id="username" class="form-control"
+                                        placeholder="Usuario">
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="password" class="sr-only"></label>
@@ -117,7 +117,6 @@
     <!-- JQUERY SCRIPT JS-->
     <script src="{%static 'js/jquery-3.7.0.min.js'%}" crossorigin="anonymous"></script>
     <script src="{%static 'js/jquery.validate.min.js'%}"></script>
-
     <script type="text/javascript">
         var user = '{{request.user}}'
 
@@ -141,8 +140,12 @@
         }
         const csrftoken = getToken('csrftoken');
 
-        {% comment %} function iniciarSesion(email, password) {
+        function iniciarSesion(username, password) {
             var url = '/logearse/';
+            var data = {
+                username : username,
+                password: password
+            };
 
             fetch(url, {
                 method: 'POST',
@@ -150,7 +153,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': csrftoken
                 },
-                body: JSON.stringify({ 'email': email, 'password': password })
+                body: JSON.stringify(data)
             })
                 .then(response => {
                     if (response.ok) {
@@ -158,21 +161,25 @@
                         return response.json();
                     } else {
                         console.log('Error al iniciar sesión');
+                        window.location.href = "/iniciar_sesion"
+                        alert("ERROR INTENTE DENUEVO")
                         throw new Error('Error en la solicitud de inicio de sesión');
                     }
+
                 })
                 .then(data => {
                     console.log(data);
                     // Realiza acciones adicionales después del inicio de sesión exitoso
-                    location.reload(); // Ejemplo: recargar la página después del inicio de sesión
+                    window.location.href="/index"; // Ejemplo: recargar la página después del inicio de sesión
                 })
                 .catch(error => {
                     console.log(error);
                     // Maneja el error en el inicio de sesión según tus necesidades
                 });
-        } {% endcomment %}
+        } 
     </script>
-    <script src="{%static 'js/formulario_Jquery.js'%}"></script>
+    <script src="{%static 'js/formulario_login.js'%}"></script>
+
     {%block script%}
 
     {%endblock%}
