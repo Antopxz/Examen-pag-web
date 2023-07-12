@@ -79,7 +79,14 @@ def agregarAlCarrito(request):
         orden=orden, producto=producto)
 
     if action == 'add':
-        itemsOrden.cantidad = (itemsOrden.cantidad + 1)
+        if itemsOrden.cantidad < producto.stock:
+            itemsOrden.cantidad += 1
+            itemsOrden.save()
+            return JsonResponse({'message': 'Producto agregado al carrito'})
+
+        else:
+            # Mostrar mensaje de error al usuario
+            return JsonResponse({'error': 'No hay suficiente stock disponible'})
     elif action == 'remove':
         itemsOrden.cantidad = (itemsOrden.cantidad - 1)
 
@@ -87,7 +94,7 @@ def agregarAlCarrito(request):
 
     if itemsOrden.cantidad <= 0:
         itemsOrden.delete()
-    return JsonResponse('Producto agregado', safe=False)
+    return JsonResponse({'message': 'Producto removido del carrito'})
 
 
 @csrf_exempt
@@ -141,7 +148,7 @@ def procesarOrden(request):
                 ciudad=data['shipping']['ciudad'],
                 region=data['shipping']['region'],
                 codigoPostal=data['shipping']['codigoPostal']
-            )
+            )            
     else:
         print('Usuario no logeado :s')
     return JsonResponse('Pago completado', safe=False)

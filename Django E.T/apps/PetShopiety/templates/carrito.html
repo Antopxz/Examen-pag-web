@@ -21,7 +21,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg bg-black mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href"/" style="color: white;">PetShopiety</a>
+            <a class="navbar-brand fw-bold" href="/index" style="color: white;">PetShopiety</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -30,16 +30,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/" style="color: white;">Inicio</a>
+                        <a class="nav-link active" href="/index" style="color: white;">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: white;">Tienda</a>
+                        <a class="nav-link" href="/tienda" style="color: white;">Tienda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#about" style="color: white;">Sobre nosotros</a>
+                    <li>
+                        {% if not request.user.is_authenticated %}
+                        <a class="nav-link" href="/iniciar_sesion" style="color: white;">Iniciar sesión</a>
+                        {% endif %}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#contact" style="color: white;">Contactenos</a>
+                    <li>
+                        <a class="nav-link" href="/admin_productos" style="color: white;">ADMIN. PRODUCTOS</a>
+                    </li>
+                    <li>
+                        {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="/cerrar_sesion" style="color: white;">Cerrar sesión</a>
+                        {% endif %}
                     </li>
                     <li>
                         <div class="form-check form-switch">
@@ -53,9 +60,10 @@
         </div>
     </nav>
 
+    <div id="alert-container" class="position-fixed top-0 end-0 m-5 translate-middle"></div>
 
     <main class="py-md-0">
-        <div class="row">
+        <div class="row bg-dark-subtle">
             <div class="col-lg-12">
                 <div class="box-element">
                     <a class="btn btn-outline-dark" href="/tienda">&#x2190; Sigue comprando</a>
@@ -99,9 +107,11 @@
                                     <td>{{item.producto.nombre}}</td>
                                     <td>{{item.producto.precio}}</td>
                                     <td>
-                                        <button data-product="{{item.producto.sku}}" data-action="add" class="btn comprar">+</button>
+                                        <button data-product="{{item.producto.sku}}" data-action="add"
+                                            class="btn comprar">+</button>
                                         <p class="cantidad">{{item.cantidad}}</p>
-                                        <button data-product="{{item.producto.sku}}" data-action="remove" class="btn comprar">-</button>
+                                        <button data-product="{{item.producto.sku}}" data-action="remove"
+                                            class="btn comprar">-</button>
                                     </td>
                                     <td>${{item.obtener_total|intcomma}} CLP</td>
                                 </tr>
@@ -128,29 +138,30 @@
     <!-- JQUERY SCRIPT JS-->
     <script type="text/javascript">
         var user = '{{request.user}}'
-    
-    {% comment %} 
+
+        {% comment %} 
     Esto que se usa ahora es para poder crear tokens al momento que el usuario estara con la sesion iniciada.
     {% endcomment %}
         function getToken(name) {
-          let cookieValue = null;
-          if (document.cookie && document.cookie !== '') {
-              const cookies = document.cookie.split(';');
-              for (let i = 0; i < cookies.length; i++) {
-                  const cookie = cookies[i].trim();
-                  // Does this cookie string begin with the name we want?
-                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                      break;
-                  }
-              }
-          }
-          return cookieValue;
-      }
-      const csrftoken = getToken('csrftoken');
-      </script>
-      <script src="{%static './js/Carrito.js'%}"></script>
- 
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getToken('csrftoken');
+    </script>
+    <script src="{%static './js/Carrito.js'%}"></script>
+    <script src="{%static './js/index.js'%}"></script>
+
     {%block script%}
 
     {%endblock%}
