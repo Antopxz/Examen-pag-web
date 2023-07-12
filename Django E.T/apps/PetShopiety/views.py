@@ -216,7 +216,8 @@ def cerrar_sesion(request):
     logout(request)
     return (redirect('/index'))
 
-
+from django.contrib.auth.decorators import user_passes_test
+@user_passes_test(lambda user: user.is_authenticated and user.administrador)
 def cargarAdminProductos(request):
     categorias = Categoria.objects.all()
     productos = Producto.objects.all()

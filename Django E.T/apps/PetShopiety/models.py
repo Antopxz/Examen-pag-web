@@ -33,6 +33,17 @@ class Producto(models.Model):
             url = ''
         return url
 
+class Administrador(models.Model):
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE, null=True, blank=True)
+    nombre = models.CharField(max_length=200, null=True)
+    email = models.CharField(max_length=200, null=True)
+    contacto = models.IntegerField()
+
+    def __str__(self):
+        txt = "Usuario: {0} - Nombre : {1} Email: {2}"
+        return txt.format(self.usuario, self.nombre, self.email)
+
 
 class Comprador(models.Model):
     usuario = models.OneToOneField(

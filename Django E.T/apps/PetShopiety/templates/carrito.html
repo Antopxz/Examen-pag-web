@@ -39,15 +39,17 @@
                         {% if not request.user.is_authenticated %}
                         <a class="nav-link" href="/iniciar_sesion" style="color: white;">Iniciar sesión</a>
                         {% endif %}
-                    </li>
-                    <li>
+                      </li>
+                      <li>
+                        {% if user.is_authenticated and user.administrador %}
                         <a class="nav-link" href="/admin_productos" style="color: white;">ADMIN. PRODUCTOS</a>
-                    </li>
-                    <li>
-                        {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="/cerrar_sesion" style="color: white;">Cerrar sesión</a>
                         {% endif %}
-                    </li>
+                      </li>
+                      <li>
+                        {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="/cerrar_sesion" style="color: white">Cerrar sesión</a>
+                        {% endif %}
+                      </li>
                     <li>
                         <div class="form-check form-switch">
                             <input type="checkbox" class="form-check-input" id="checkbox" onclick="setDarkMode()">

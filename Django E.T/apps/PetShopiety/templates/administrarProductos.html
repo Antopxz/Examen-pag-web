@@ -22,7 +22,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/">PetShopiety</a>
+            <a class="navbar-brand fw-bold" href="/index">PetShopiety</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -31,17 +31,23 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/">Inicio</a>
+                        <a class="nav-link active" href="/index">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tienda">Tienda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#about">Sobre nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#contact"> Contactenos</a>
-                    </li>
+                    <li>
+                        {% if not request.user.is_authenticated %}
+                        <a class="nav-link" href="/iniciar_sesion">Iniciar sesión</a>
+                        {% endif %}
+                      </li>
+                      <li>
+                        {% if user.is_authenticated and user.administrador %}
+                        <a class="nav-link" href="/admin_productos">ADMIN. PRODUCTOS</a>
+                        {% endif %}
+                      </li>
+                      <li>
+                        {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="/cerrar_sesion">Cerrar sesión</a>
+                        {% endif %}
+                      </li>
                     <li>
                         <div class="form-check form-switch">
                             <input type="checkbox" class="form-check-input" id="checkbox" onclick="setDarkMode()">
@@ -129,7 +135,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/agregarProductoForm" method="POST" id="agregar-producto"
+                    <form action="/agregarProductoForm" method="POST" id="agregar-producto" name="agregar-producto"
                         enctype="multipart/form-data">{% csrf_token %}
                         <div class="mb-3">
                             <label for="img" class="col-form-label">Url imagen:</label>
@@ -156,7 +162,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="producto" class="col-form-label">Descripcion producto:</label>
-                            <textarea name="descripcion" id="" class="form-control" placeholder="Escribe la descripcion"
+                            <textarea name="descripcion" id="descripcionInput" class="form-control" placeholder="Escribe la descripcion"
                                 cols="30" rows="4"></textarea>
                         </div>
                         <div class="mb-3">
@@ -179,64 +185,6 @@
             </div>
         </div>
     </div>
-    <!-- MODAL EDITAR -->
-    {% comment %} <div class="modal fade" id="modal-editar" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar producto</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="/editarProductoForm/{{p.sku}}" method="POST" enctype="multipart/form-data">{%
-                        csrf_token %}
-                        <div class="mb-3">
-                            <label for="img" class="col-form-label">Url imagen:</label>
-                            <input type="file" name="img" class="form-control" id="img" placeholder="Ingrese imagen" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="txtSku" class="col-form-label">SKU:</label>
-                            <input readonly value="{{prod.sku}}" name="txtSku" id="txtSku" type="text"
-                                class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="producto" class="col-form-label">Nombre producto:</label>
-                            <input type="text" name="producto" class="form-control" id="inputProducto"
-                                placeholder="Ingrese nombre producto"></input>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="cantidad">Stock:</label>
-                            <input type="number" name="cantidad" id="inputStock" class="form-control"
-                                placeholder="Ingrese cantidad" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="precio" class="col-form-label">Precio:</label>
-                            <input type="number" name="precio" class="form-control" aria-label="Amount" id="inputPrecio"
-                                placeholder="Ingrese precio CLP">
-                        </div>
-                        <div class="mb-3">
-                            <label for="producto" class="col-form-label">Descripcion producto:</label>
-                            <input type="text" name="descripcion" class="form-control" id="inputDescripcion"
-                                placeholder="Ingrese nombre producto"></input>
-                        </div>
-                        <div class="mb-3">
-                            <label for="cmbCategoria" class="col-form-label">Categoria:</label>
-                            <select name="cmbCategoria" class="form-select" aria-label="Default select example">
-                                <option disabled selected>Seleccione</option>
-                                {%for c in cate%}
-                                <option value="{{c.id_categoria}}">{{c.nombre_categoria}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
-                            <button type="button" class="btn btn-primary">EDITAR</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> {% endcomment %}
 
         <!-- Bootstrap script -->
         {%block script%}
@@ -254,10 +202,11 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
             crossorigin="anonymous"></script>
-        <!--SCRIPT JS-->
-        <script src="{%static 'js/AdminProducts.js'%}"></script>
-        <script src="{%static 'js/CRUD.js'%}"></script>
-        <script src="{%static 'js/index.js'%}"></script>
+        <!--SCRIPT JS-->       
+        <script src="{%static 'js/jquery-3.7.0.min.js'%}" crossorigin="anonymous"></script>
+         <script src="{%static 'js/jquery.validate.min.js'%}"></script>
+        <script src="{%static 'js/formulario_productos.js'%}"></script>
+
 </body>
 
 </html>

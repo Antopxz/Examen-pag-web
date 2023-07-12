@@ -1,20 +1,4 @@
 //Formulario REGISTER
-var formularioCrearUsuario = document.getElementById("formulario-register");
-
-formularioCrearUsuario.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    var nombre = document.getElementById("nombre").value;
-    var email = document.getElementById("email").value;
-    var contacto = document.getElementById("contacto").value;
-
-    crearUsuario(username, password, nombre, email, contacto);
-});
-
-
-
 $('#formulario-register').validate({
     rules: {
         nombre: {
@@ -67,14 +51,24 @@ $('#formulario-register').validate({
 })
 
 $("#register").click(function () {
-    if ($('#formulario-register').valid() == false) {
-        return;
-    }
-    let name = $('#name').val()
-    let email = $('#email').val()
-    let number = $('#number').val()
-    let password = $('#password').val()
-    let repassword = $('#repassword').val()
+    if ($('#formulario-register').valid() == true) {
+        var formularioCrearUsuario = document.getElementById("formulario-register");
 
+        formularioCrearUsuario.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var nombre = document.getElementById("nombre").value;
+            var email = document.getElementById("email").value;
+            var contacto = document.getElementById("contacto").value;
+
+            crearUsuario(username, password, nombre, email, contacto);
+        });
+
+
+    }
+    return;
+}
     //Construir JSON enviar por $.post
-})
+)

@@ -41,7 +41,9 @@
             {% endif %}
           </li>
           <li>
+            {% if user.is_authenticated and user.administrador %}
             <a class="nav-link" href="/admin_productos">ADMIN. PRODUCTOS</a>
+            {% endif %}
           </li>
           <li>
             {% if request.user.is_authenticated %}
